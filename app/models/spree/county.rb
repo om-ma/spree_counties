@@ -1,14 +1,19 @@
-class Spree::County < ActiveRecord::Base
-  belongs_to :state
-  has_many :addresses, dependent: :nullify
-  validates :name, presence: true
-  Spree::Ability.register_ability(CountyAbility)
+module Spree
+  class County < ActiveRecord::Base
 
-  def <=>(other)
-    name <=> other.name
-  end
+    belongs_to :state
+    has_many :addresses, dependent: :nullify
 
-  def to_s
-    name
+    validates :name, presence: true
+    
+    Spree::Ability.register_ability(CountyAbility)
+
+    def <=>(other)
+      name <=> other.name
+    end
+
+    def to_s
+      name
+    end
   end
 end

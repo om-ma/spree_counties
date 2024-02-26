@@ -10,7 +10,7 @@ module Spree
     validate :county_validate
 
     def require_county?
-      false
+      true
     end
 
     private
@@ -35,11 +35,11 @@ module Spree
         # ensure county_name belongs to state without counties, or that it matches a predefined state name
         if county_name.present?
           if state.counties.present?
-            counties = state.counties.find_all_by_name(county_name)
+            counties = state.counties.where(name: county_name)
 
             if counties.size == 1
               self.county = counties.first
-              self.county_name = nil
+              self.county_name = counties&.first&.name
             else
               errors.add(:state, :invalid)
             end
