@@ -12,7 +12,7 @@ module Spree
           end
 
           def resource
-            @resource = scope.find(params[:id])
+            @resource = scope.find_by(zipcode: params[:id])
           end
           
           def model_class
