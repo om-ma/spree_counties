@@ -12,19 +12,23 @@ module Spree
 
       protected
 
-        def collection
-          return @collection if @collection.present?
-          params[:q] ||= {}
+      def collection
+        return @collection if @collection.present?
 
-          @collection = super
+        params[:q] ||= {}
+        @collection = super
+
+        if params[:q].present?
           @search = @collection.ransack(params[:q])
           @collection = @search.result
-          @collection
         end
 
-        def load_data
-          @states = Spree::State.order(:name)
-        end
+        @collection
+      end
+
+      def load_data
+        @states = Spree::State.order(:name)
+      end
 
     end
   end
